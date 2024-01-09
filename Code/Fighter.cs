@@ -27,17 +27,5 @@ namespace TestGame
             Console.WriteLine($"Attack: {Attack}");
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public void ReduceBlood(int amountOfBloodToReduce)
-        {
-            if ((Blood - amountOfBloodToReduce) <= 0)
-            {
-                Blood = 0;
-                IsAlive = false;
-            }
-            else
-            {
-                Blood -= amountOfBloodToReduce;
-            }
-        }
     }
 }
