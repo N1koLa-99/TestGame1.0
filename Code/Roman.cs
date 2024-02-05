@@ -21,5 +21,9 @@ namespace TestGame
                 return "Римлянин";
             }
         }
+        public override int DamageChampion()
+        {
+            return Attack;
+        }
     }
 }
