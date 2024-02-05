@@ -21,5 +21,9 @@ namespace TestGame
                 return "Спартанец";
             }
         }
+        public override int DamageChampion()
+        {
+            return Attack;
+        }
     }
 }
