@@ -21,5 +21,9 @@ namespace TestGame
                 return "Викинг";
             }
         }
+        public override int DamageChampion()
+        {
+            return Attack;
+        }
     }
 }
