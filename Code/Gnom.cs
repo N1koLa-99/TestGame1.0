@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace TestGame
 {
-    internal class Gnoms : Fighter
+    internal class Gnom : Fighter
     {
-        public Gnoms()
+        public Gnom()
         {
-            Blood = 300;
-            Attack = 15;
+            Blood = 700;
+            Attack = 25;
         }
         public override string FighterType
         {
@@ -19,6 +19,10 @@ namespace TestGame
             {
                 return "Гном";
             }
+        }
+        public override int DamageChampion()
+        {
+            return Attack;
         }
     }
 }
