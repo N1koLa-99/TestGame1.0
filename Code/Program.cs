@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Xml;
 
 namespace TestGame
 {
     internal class Program
     {
-        static int count = 1;
-      
-        static void Main(string[] args)
+        static List<Fighter> warriors;
+
+        private static void Main(string[] args)
         {
             Console.WriteLine("Избери си войн....от 1 до 3");
             Console.WriteLine();
@@ -18,81 +16,48 @@ namespace TestGame
             Console.WriteLine(" 1-Римлянин \n 2-Викинг \n 3-Спартанец\n");
             Console.ForegroundColor = ConsoleColor.White;
 
-            List<Fighter> worriors = new List<Fighter>();
-            CreatFighter(worriors);
+            warriors = new List<Fighter>();
 
-            BattleBegan(worriors);
+            int chosenNational;
+            bool currentChoice = true;
+            Fighter chosenFighter = null;
 
+            while (currentChoice)
+            {
+                Console.Write("Въведете число за избор на герой: ");
+                chosenNational = int.Parse(Console.ReadLine());
+                try
+                {
+                    chosenFighter = GetFighterByNational(chosenNational);
+                    Console.WriteLine("Ти избра:");
+                    chosenFighter.ShowObject();
+                    warriors.Add(chosenFighter);
+                    currentChoice = false;
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Грешка: {ex.Message}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+
+            if (chosenFighter != null)
+            {
+                Fighter player1 = warriors[0];
+                player1.BattleWithGnome();
+            }
         }
-        private static void BattleBegan(List<Fighter> worriors)
+
+        private static Fighter GetFighterByNational(int chosenNational)
         {
-            bool battleIsOver = false;
-
-            do
+            return chosenNational switch
             {
-                Console.Clear();
-                foreach (Fighter warrior in worriors)
-                {
-                    Console.WriteLine($"Играч {count} : ");
-                    warrior.ShowObject();
-                    count++;
-                    Console.Clear();
-                }
-                break;
-
-            }
-            while (!battleIsOver);
-            {
-
-            }
-
-        }
-        private static void CreatFighter(List<Fighter> worriors)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                int chosenNational;
-                if (i == 0)
-                {
-                    Console.Write("Играч 1 въведете число...");
-                    chosenNational = int.Parse(Console.ReadLine());
-                }
-                else
-                {
-                    Console.Write("Играч 2 въведете число...");
-                    chosenNational = int.Parse(Console.ReadLine());
-                }
-
-                switch (chosenNational)
-                {
-                    case 1:
-                        {
-                            Console.WriteLine("Ти избра:");
-                            Fighter roman = new Roman();
-                            roman.ShowObject();
-                            worriors.Add(roman);
-                            break;
-                        }
-
-                    case 2:
-                        {
-                            Console.WriteLine("Ти избра:");
-                            Fighter viking = new Viking();
-                            viking.ShowObject();
-                            worriors.Add(viking);
-                            break;
-                        }
-
-                    case 3:
-                        {
-                            Console.WriteLine("Ти избра:");
-                            Fighter spartan = new Spartan();
-                            spartan.ShowObject();
-                            worriors.Add(spartan);
-                            break;
-                        }
-                }
-            }
+                1 => new Roman(),
+                2 => new Viking(),
+                3 => new Spartan(),
+                _ => throw new ArgumentException("Невалиден избор за воин, число требва да е в диапазона (от 1 до 3)"),
+            };
         }
     }
 }
